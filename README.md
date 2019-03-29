@@ -1,4 +1,4 @@
-# meta-machine-learning
+# meta-machinelearning
 
 This Yocto/OpenEmbedded machine-learning meta-layer provides support for machine learning libraries:
 

@@ -8,7 +8,7 @@ https://github.com/renesas-rz/meta-renesas-ai
 
 In order to add TensorFlow Lite support to your project, make sure
 *tensorflow-lite* is listed as a dependency to your recipe/package.
-Listing *tensorflow-lite-staticdev* and *tensorflow-dev* in *IMAGE\_INSTALL*
+Listing *tensorflow-lite-staticdev* and *tensorflow-lite-dev* in *IMAGE\_INSTALL*
 variable could be beneficial when you just want to populate an SDK for
 developing an application based on TensorFlow Lite.
 

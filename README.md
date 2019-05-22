@@ -26,7 +26,12 @@ It loads a Tensorflow or ONNX frozen model from the regular protobuf format, and
 
 In order to use tract for testing purpose, we created a recipe that will fetch and build the tract example, wrote in rust and using the MobileNet v1 224.
 
-Make sure that *tract* is listed as a dependency, once build, you will able to find the example folder *tract-examples* under */usr/bin/*.
+The target used is a nitrogen6x, yocto version fido, CURRENTLY WILL NOT WORK for different target, will update asap.
+
+As most of tract is wrote in rust, you will need to add the layer meta-rust-bin (https://github.com/rust-embedded/meta-rust-bin) within your project.
+Don't forget to update your bblayers.conf.
+
+Make sure that *tract* is listed as a dependency to your recipe/package, once build, you will be able to find the example folder *tract-examples* under */usr/bin/*.
 
 Within this folder you will find the needed files to run the example
 
@@ -35,3 +40,7 @@ Within this folder you will find the needed files to run the example
 	* .txt holding the labels
 
 Simply run the executable and you should be able to see the result *time and most accurate*.
+
+How it works ?
+
+Simply put, our recipe inherit from cargo a .bbclass from the layer meta-rust-bin providing a pre-built toolchains that will allow us to build tract.

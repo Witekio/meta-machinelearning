@@ -1,0 +1,47 @@
+From 61f65154ed7745d0ef01626a39984d660c6254bb Mon Sep 17 00:00:00 2001
+From: krutten <krutten@witekio.com>
+Date: Wed, 22 May 2019 15:10:25 +0200
+Subject: [PATCH 3/3] add time tracker
+
+---
+ examples/tensorflow-mobilenet-v2/src/main.rs | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/examples/tensorflow-mobilenet-v2/src/main.rs b/examples/tensorflow-mobilenet-v2/src/main.rs
+index 408eaf2..cb30c1c 100644
+--- a/examples/tensorflow-mobilenet-v2/src/main.rs
++++ b/examples/tensorflow-mobilenet-v2/src/main.rs
+@@ -1,7 +1,11 @@
+ use tract_core::ndarray;
+ use tract_core::prelude::*;
++use std::time::{Duration, Instant};
+ 
+ fn main() -> TractResult<()> {
++    // get start time
++    let start = Instant::now();
++
+     // load the model
+     let mut model =
+         tract_tensorflow::tensorflow().model_for_path("mobilenet_v1_1.0_224_quant_frozen.pb")?;
+@@ -24,6 +28,9 @@ fn main() -> TractResult<()> {
+     // run the plan on the input
+     let result = plan.run(tvec!(image))?;
+ 
++    // get end time
++    let end = Instant::now();
++
+     // find and display the max value with its index
+     let best = result[0]
+         .to_array_view::<f32>()?
+@@ -31,6 +38,7 @@ fn main() -> TractResult<()> {
+         .cloned()
+         .zip(1..)
+         .max_by(|a, b| a.0.partial_cmp(&b.0).unwrap());
+-    println!("result: {:?}", best);
++    
++    println!("result: {:?} in time: {:?}", best, end.duration_since(start));
+     Ok(())
+ }
+-- 
+2.7.4
+

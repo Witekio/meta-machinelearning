@@ -1,0 +1,25 @@
+From 8358b32387a686756b49fd53e38c0ff5c37c3351 Mon Sep 17 00:00:00 2001
+From: krutten <krutten@witekio.com>
+Date: Fri, 17 May 2019 18:02:38 +0200
+Subject: [PATCH] change example frozen.pb to targeted one
+
+---
+ examples/tensorflow-mobilenet-v2/src/main.rs | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/examples/tensorflow-mobilenet-v2/src/main.rs b/examples/tensorflow-mobilenet-v2/src/main.rs
+index c311e2c..496baea 100644
+--- a/examples/tensorflow-mobilenet-v2/src/main.rs
++++ b/examples/tensorflow-mobilenet-v2/src/main.rs
+@@ -4,7 +4,7 @@ use tract_core::prelude::*;
+ fn main() -> TractResult<()> {
+     // load the model
+     let mut model =
+-        tract_tensorflow::tensorflow().model_for_path("mobilenet_v2_1.4_224_frozen.pb")?;
++        tract_tensorflow::tensorflow().model_for_path("mobilenet_v1_1.0_224_quant_frozen.pb")?;
+ 
+     // specify input type and shape
+     model.set_input_fact(0, TensorFact::dt_shape(f32::datum_type(), tvec!(1, 224, 224, 3)))?;
+-- 
+2.7.4
+

@@ -14,9 +14,6 @@ SRC_URI = " \
         file://0002-add-time-tracker.patch \
         https://download.tensorflow.org/models/mobilenet_v1_2018_08_02/mobilenet_v1_1.0_224_quant.tgz \
 "
-#LICENSE = "MIT"
-#LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
-
 SRCREV = "${AUTOREV}"
 
 S = "${WORKDIR}/git"

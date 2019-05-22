@@ -21,11 +21,12 @@ package *tensorflow-lite-examples*). The sample application is installed under
 */usr/bin/tensorflow-lite/examples/*.
 
 # tract:
-tract is a tensorflow- and ONNX- compatible inference library. It loads a Tensorflow or ONNX frozen model from the regular protobuf format, and flows data through it.
+tract (https://github.com/snipsco/tract/blob/master/README.md) is a tensorflow- and ONNX- compatible inference library.
+It loads a Tensorflow or ONNX frozen model from the regular protobuf format, and flows data through it.
 
-In order to use tract for test pupose, we created a recipe that will fetch and build the tract example wrote in rust using the MobileNet v1 224.
+In order to use tract for testing purpose, we created a recipe that will fetch and build the tract example, wrote in rust and using the MobileNet v1 224.
 
-Make sure that *tract* is listed as a dependency, you will able to find the example folder *tract-examples* under */usr/bin/tract-examples/*.
+Make sure that *tract* is listed as a dependency, once build, you will able to find the example folder *tract-examples* under */usr/bin/*.
 
 Within this folder you will find the needed files to run the example
 

@@ -1,0 +1,23 @@
+diff --git a/tests/CMakeLists.txt b/tests/CMakeLists.txt
+index 9913321..bb82d49 100644
+--- a/tests/CMakeLists.txt
++++ b/tests/CMakeLists.txt
+@@ -158,6 +158,18 @@ if (BUILD_TF_LITE_PARSER)
+         addDllCopyCommands(${testName})
+     endmacro()
+ 
++    set(TfLiteMobilenetQuantized_0_25-Armnn_sources
++	TfLiteMobilenetQuantized-Armnn/TfLiteMobilenetQuantized_0_25-Armnn.cpp
++        ImagePreprocessor.hpp
++        ImagePreprocessor.cpp)
++    TfLiteParserTest(TfLiteMobilenetQuantized_0_25 "${TfLiteMobilenetQuantized_0_25-Armnn_sources}")
++
++    set(TfLiteMobilenetQuantized_1_0-Armnn_sources
++	TfLiteMobilenetQuantized-Armnn/TfLiteMobilenetQuantized_1_0-Armnn.cpp
++        ImagePreprocessor.hpp
++        ImagePreprocessor.cpp)
++    TfLiteParserTest(TfLiteMobilenetQuantized_1_0 "${TfLiteMobilenetQuantized_1_0-Armnn_sources}")
++
+     set(TfLiteMobilenetQuantized-Armnn_sources
+         TfLiteMobilenetQuantized-Armnn/TfLiteMobilenetQuantized-Armnn.cpp
+         ImagePreprocessor.hpp

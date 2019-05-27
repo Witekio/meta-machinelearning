@@ -1,0 +1,14 @@
+diff --git a/src/runtime/opencl/opencl_module.cc b/src/runtime/opencl/opencl_module.cc
+index 971ae348..753764a2 100644
+--- a/src/runtime/opencl/opencl_module.cc
++++ b/src/runtime/opencl/opencl_module.cc
+@@ -223,7 +223,8 @@ cl_kernel OpenCLModuleNode::InstallKernel(cl::OpenCLWorkspace* w,
+     // build program
+     cl_int err;
+     cl_device_id dev = w->devices[device_id];
+-    err = clBuildProgram(program_, 1, &dev, nullptr, nullptr, nullptr);
++    char options[] = "-cl-mad-enable -cl-unsafe-math-optimizations -cl-fast-relaxed-math";
++    err = clBuildProgram(program_, 1, &dev, options, nullptr, nullptr);
+     if (err != CL_SUCCESS) {
+       size_t len;
+       std::string log;

@@ -1,0 +1,48 @@
+diff --git a/nnvm/python/setup.py b/nnvm/python/setup.py
+index f89ac33a..dac36acb 100644
+--- a/nnvm/python/setup.py
++++ b/nnvm/python/setup.py
+@@ -58,7 +58,7 @@ if not os.getenv('CONDA_BUILD'):
+     LIB_PATH = libinfo['find_lib_path']()
+     _, LIB_NAME = os.path.split(LIB_PATH[0])
+     curr_path = os.path.dirname(os.path.abspath(os.path.expanduser(__file__)))
+-    rpath = os.path.relpath(LIB_PATH[0], curr_path)
++    rpath = LIB_PATH[0]
+     setup_kwargs = dict(
+         include_package_data=True,
+         data_files=[('nnvm', [rpath])]
+diff --git a/python/setup.py b/python/setup.py
+index 11cd6642..f0379a9e 100644
+--- a/python/setup.py
++++ b/python/setup.py
+@@ -76,7 +76,7 @@ def config_cython():
+         else:
+             subdir = "_cy2"
+         ret = []
+-        path = "tvm/_ffi/_cython"
++        path = os.path.join(CURRENT_DIR, './tvm/_ffi/_cython')
+         if os.name == 'nt':
+             library_dirs = ['tvm', '../build/Release', '../build']
+             libraries = ['libtvm']
+@@ -88,7 +88,7 @@ def config_cython():
+                 continue
+             ret.append(Extension(
+                 "tvm._ffi.%s.%s" % (subdir, fn[:-4]),
+-                ["tvm/_ffi/_cython/%s" % fn],
++                [path + "/%s" % fn],
+                 include_dirs=["../include/",
+                               "../3rdparty/dmlc-core/include",
+                               "../3rdparty/dlpack/include",
+diff --git a/topi/python/setup.py b/topi/python/setup.py
+index bff05767..1b528748 100644
+--- a/topi/python/setup.py
++++ b/topi/python/setup.py
+@@ -63,8 +63,6 @@ LIB_LIST, __version__ = get_lib_path()
+ 
+ if not os.getenv('CONDA_BUILD'):
+     curr_path = os.path.dirname(os.path.abspath(os.path.expanduser(__file__)))
+-    for i, path in enumerate(LIB_LIST):
+-        LIB_LIST[i] = os.path.relpath(path, curr_path)
+     setup_kwargs = {
+         "include_package_data": True,
+         "data_files": [('topi', LIB_LIST)]

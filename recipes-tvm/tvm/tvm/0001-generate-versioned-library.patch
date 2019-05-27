@@ -1,0 +1,18 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 2de90e55..d943a734 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -205,9 +205,13 @@ endif()
+ add_library(nnvm_compiler SHARED ${NNVM_COMPILER_SRCS})
+ 
+ target_link_libraries(tvm ${TVM_LINKER_LIBS} ${TVM_RUNTIME_LINKER_LIBS})
++set_target_properties(tvm PROPERTIES VERSION ${GENERIC_LIB_VERSION} 0 ${GENERIC_LIB_SOVERSION} )
+ target_link_libraries(tvm_topi tvm ${TVM_LINKER_LIBS} ${TVM_RUNTIME_LINKER_LIBS})
++set_target_properties(tvm_topi tvm PROPERTIES VERSION ${GENERIC_LIB_VERSION} 0 ${GENERIC_LIB_SOVERSION} )
+ target_link_libraries(tvm_runtime ${TVM_RUNTIME_LINKER_LIBS})
++set_target_properties(tvm_runtime PROPERTIES VERSION ${GENERIC_LIB_VERSION} 0 ${GENERIC_LIB_SOVERSION} )
+ target_link_libraries(nnvm_compiler tvm)
++set_target_properties(nnvm_compiler tvm PROPERTIES VERSION ${GENERIC_LIB_VERSION} 0 ${GENERIC_LIB_SOVERSION} )
+ 
+ # Related headers
+ target_include_directories(

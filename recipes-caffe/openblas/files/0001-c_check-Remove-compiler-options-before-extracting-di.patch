@@ -1,0 +1,42 @@
+From 9bf9022ee2b6c7b6b934ab81f650018b46c5594a Mon Sep 17 00:00:00 2001
+From: Valentine Barshak <valentine.barshak@cogentembedded.com>
+Date: Wed, 1 Feb 2017 02:36:59 +0300
+Subject: [PATCH] c_check: Remove compiler options before extracting dirname
+
+This removes compiler options before extracting dirname.
+Otherwise dirname function incorrectly interprets paths
+passed in the options (for example --sysroot=dir) as
+parts of compiler's path.
+
+Signed-off-by: Valentine Barshak <valentine.barshak@cogentembedded.com>
+---
+ c_check | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
+
+diff --git a/c_check b/c_check
+index 20da288..54379df 100644
+--- a/c_check
++++ b/c_check
+@@ -31,11 +31,16 @@ if ($?) {
+ 
+ $cross_suffix = "";
+ 
+-if (dirname($compiler_name) ne ".") {
+-    $cross_suffix .= dirname($compiler_name) . "/";
++# Strip compiler options. Otherwise, dirname incorrectly
++# interprets sysroot as part of compiler path
++$compiler_base = $compiler_name;
++$compiler_base =~ s/\s+-+\w.*//;
++
++if (dirname($compiler_base) ne ".") {
++    $cross_suffix .= dirname($compiler_base) . "/";
+ }
+ 
+-if (basename($compiler_name) =~ /([^\s]*-)(.*)/) {
++if (basename($compiler_base) =~ /([^\s]*-)(.*)/) {
+     $cross_suffix .= $1;
+ }
+ 
+-- 
+2.7.4
+

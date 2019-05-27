@@ -1,0 +1,93 @@
+diff --git a/tensorflow/lite/examples/label_image/label_image.cc b/tensorflow/lite/examples/label_image/label_image.cc
+index 340fbab5..9fcd7395 100644
+--- a/tensorflow/lite/examples/label_image/label_image.cc
++++ b/tensorflow/lite/examples/label_image/label_image.cc
+@@ -33,6 +33,7 @@ limitations under the License.
+ #include <unistd.h>     // NOLINT(build/include_order)
+ 
+ #include "tensorflow/lite/kernels/register.h"
++#include "tensorflow/lite/delegates/gpu/gl_delegate.h"
+ #include "tensorflow/lite/model.h"
+ #include "tensorflow/lite/optional_debug_tools.h"
+ #include "tensorflow/lite/string_util.h"
+@@ -112,6 +113,15 @@ void RunInference(Settings* s) {
+     exit(-1);
+   }
+ 
++  if (s->gpu) {
++    auto* delegate = TfLiteGpuDelegateCreate(nullptr);
++    LOG(INFO) << "Use GPU.\n";
++    if (interpreter->ModifyGraphWithDelegate(delegate) != kTfLiteOk) {
++      LOG(FATAL) << "Failed to enable GPU.\n";
++      exit(-1);
++    }
++  }
++ 
+   interpreter->UseNNAPI(s->accel);
+   interpreter->SetAllowFp16PrecisionForFp32(s->allow_fp16);
+ 
+@@ -153,8 +163,15 @@ void RunInference(Settings* s) {
+     LOG(INFO) << "number of outputs: " << outputs.size() << "\n";
+   }
+ 
+-  if (interpreter->AllocateTensors() != kTfLiteOk) {
+-    LOG(FATAL) << "Failed to allocate tensors!";
++  if (!s->gpu) {
++	LOG(INFO) << "Use tensors from CPU\n";
++  	if (interpreter->AllocateTensors() != kTfLiteOk) {
++    	LOG(FATAL) << "Failed to allocate tensors!";
++  	}
++  }
++  else
++  {
++	LOG(INFO) << "Use tensors from GPU\n";
+   }
+ 
+   if (s->verbose) PrintInterpreterState(interpreter.get());
+@@ -255,6 +272,7 @@ void display_usage() {
+   LOG(INFO)
+       << "label_image\n"
+       << "--accelerated, -a: [0|1], use Android NNAPI or not\n"
++      << "--gpu, -g: [0|1], use GPU or not\n"
+       << "--allow_fp16, -f: [0|1], allow running fp32 models with fp16 not\n"
+       << "--count, -c: loop interpreter->Invoke() for certain times\n"
+       << "--input_mean, -b: input mean\n"
+@@ -276,6 +294,7 @@ int Main(int argc, char** argv) {
+   while (1) {
+     static struct option long_options[] = {
+         {"accelerated", required_argument, nullptr, 'a'},
++        {"gpu", required_argument, nullptr, 'g'},
+         {"allow_fp16", required_argument, nullptr, 'f'},
+         {"count", required_argument, nullptr, 'c'},
+         {"verbose", required_argument, nullptr, 'v'},
+@@ -292,7 +311,7 @@ int Main(int argc, char** argv) {
+     /* getopt_long stores the option index here. */
+     int option_index = 0;
+ 
+-    c = getopt_long(argc, argv, "a:b:c:f:i:l:m:p:r:s:t:v:", long_options,
++    c = getopt_long(argc, argv, "a:b:c:f:g:i:l:m:p:r:s:t:v:", long_options,
+                     &option_index);
+ 
+     /* Detect the end of the options. */
+@@ -302,6 +321,9 @@ int Main(int argc, char** argv) {
+       case 'a':
+         s.accel = strtol(optarg, nullptr, 10);  // NOLINT(runtime/deprecated_fn)
+         break;
++      case 'g':
++        s.gpu = strtol(optarg, nullptr, 10);  // NOLINT(runtime/deprecated_fn)
++        break;
+       case 'b':
+         s.input_mean = strtod(optarg, nullptr);
+         break;
+diff --git a/tensorflow/lite/examples/label_image/label_image.h b/tensorflow/lite/examples/label_image/label_image.h
+index cc46e56b..7bbb2ebf 100644
+--- a/tensorflow/lite/examples/label_image/label_image.h
++++ b/tensorflow/lite/examples/label_image/label_image.h
+@@ -24,6 +24,7 @@ namespace label_image {
+ struct Settings {
+   bool verbose = false;
+   bool accel = false;
++  bool gpu = false;
+   bool input_floating = false;
+   bool profiling = false;
+   bool allow_fp16 = false;

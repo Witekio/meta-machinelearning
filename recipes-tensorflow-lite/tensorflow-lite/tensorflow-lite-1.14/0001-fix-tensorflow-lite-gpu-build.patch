@@ -1,0 +1,75 @@
+diff --git a/tensorflow/lite/delegates/gpu/gl/egl_context.cc b/tensorflow/lite/delegates/gpu/gl/egl_context.cc
+index 8d714e27..5df0c24b 100644
+--- a/tensorflow/lite/delegates/gpu/gl/egl_context.cc
++++ b/tensorflow/lite/delegates/gpu/gl/egl_context.cc
+@@ -15,6 +15,9 @@ limitations under the License.
+ 
+ #include "tensorflow/lite/delegates/gpu/gl/egl_context.h"
+ 
++#include <vector>
++#include <cstring>
++
+ #include "tensorflow/lite/delegates/gpu/common/status.h"
+ #include "tensorflow/lite/delegates/gpu/gl/gl_call.h"
+ #include "tensorflow/lite/delegates/gpu/gl/gl_errors.h"
+diff --git a/tensorflow/lite/delegates/gpu/gl/egl_context.h b/tensorflow/lite/delegates/gpu/gl/egl_context.h
+index 532d2d85..45e1e184 100644
+--- a/tensorflow/lite/delegates/gpu/gl/egl_context.h
++++ b/tensorflow/lite/delegates/gpu/gl/egl_context.h
+@@ -16,8 +16,6 @@ limitations under the License.
+ #ifndef TENSORFLOW_LITE_DELEGATES_GPU_GL_EGL_CONTEXT_H_
+ #define TENSORFLOW_LITE_DELEGATES_GPU_GL_EGL_CONTEXT_H_
+ 
+-#include <vector>
+-
+ #include "tensorflow/lite/delegates/gpu/common/status.h"
+ #include "tensorflow/lite/delegates/gpu/gl/portable_egl.h"
+ 
+diff --git a/tensorflow/lite/delegates/gpu/gl/kernels/elementwise.cc b/tensorflow/lite/delegates/gpu/gl/kernels/elementwise.cc
+index 37ee322a..b44e753a 100644
+--- a/tensorflow/lite/delegates/gpu/gl/kernels/elementwise.cc
++++ b/tensorflow/lite/delegates/gpu/gl/kernels/elementwise.cc
+@@ -16,6 +16,7 @@ limitations under the License.
+ #include "tensorflow/lite/delegates/gpu/gl/kernels/elementwise.h"
+ 
+ #include <string>
++#include <iostream>
+ 
+ #include "absl/memory/memory.h"
+ #include "tensorflow/lite/delegates/gpu/common/status.h"
+diff --git a/tensorflow/lite/delegates/gpu/gl/portable_egl.h b/tensorflow/lite/delegates/gpu/gl/portable_egl.h
+index 7be19851..03213ec9 100644
+--- a/tensorflow/lite/delegates/gpu/gl/portable_egl.h
++++ b/tensorflow/lite/delegates/gpu/gl/portable_egl.h
+@@ -18,5 +18,6 @@ limitations under the License.
+ 
+ #include <EGL/egl.h>
+ #include <EGL/eglext.h>
++#undef Status
+ 
+ #endif  // TENSORFLOW_LITE_DELEGATES_GPU_GL_PORTABLE_EGL_H_
+diff --git a/tensorflow/lite/delegates/gpu/gl/portable_gl31.h b/tensorflow/lite/delegates/gpu/gl/portable_gl31.h
+index a3d03bf1..72fd4a76 100644
+--- a/tensorflow/lite/delegates/gpu/gl/portable_gl31.h
++++ b/tensorflow/lite/delegates/gpu/gl/portable_gl31.h
+@@ -21,6 +21,7 @@ limitations under the License.
+ #include <EGL/egl.h>
+ #include <GLES2/gl2.h>
+ #include <GLES2/gl2ext.h>
++#undef Status
+ 
+ #ifdef __ANDROID__
+ // Weak-link all GL APIs included from this point on.
+diff --git a/tensorflow/lite/delegates/gpu/gl_delegate.h b/tensorflow/lite/delegates/gpu/gl_delegate.h
+index 66fd0c18..ce44f6c7 100644
+--- a/tensorflow/lite/delegates/gpu/gl_delegate.h
++++ b/tensorflow/lite/delegates/gpu/gl_delegate.h
+@@ -19,6 +19,8 @@ limitations under the License.
+ #include <stdint.h>
+ 
+ #include <GLES3/gl31.h>
++#undef Status
++
+ #include "tensorflow/lite/c/c_api_internal.h"
+ 
+ #ifdef SWIG

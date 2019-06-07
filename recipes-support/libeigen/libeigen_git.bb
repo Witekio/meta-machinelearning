@@ -4,10 +4,10 @@ HOMEPAGE = "http://eigen.tuxfamily.org/"
 LICENSE = "MPL-2.0"
 LIC_FILES_CHKSUM = "file://COPYING.MPL2;md5=815ca599c9df247a0c7f619bab123dad"
 
-SRC_URI = "https://bitbucket.org/eigen/eigen/get/4fe5a1014743.tar.gz;downloadfilename=4fe5a1014743.tar.gz"
-SRC_URI[sha256sum] = "8b3e1c0494af6b616ef3f2a107e093be1ea57c6a34f277edb2bdb1dbf3e3870a"
+SRC_URI = "https://bitbucket.org/eigen/eigen/get/20cbc6576426.tar.gz;downloadfilename=20cbc6576426.tar.gz"
+SRC_URI[sha256sum] = "74845ea27e19a1bcf63f3f271de62e06798f23e0467bb9d45b83a94918941b23"
 
-S = "${WORKDIR}/eigen-eigen-4fe5a1014743"
+S = "${WORKDIR}/eigen-eigen-20cbc6576426"
 
 inherit cmake
 

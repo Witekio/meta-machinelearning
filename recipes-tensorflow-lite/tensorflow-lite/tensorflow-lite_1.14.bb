@@ -63,18 +63,13 @@ do_install(){
 	cp -r \
 		${S}/tensorflow/lite/gen/lib/* \
 		${D}${libdir}
-	
-	install -d ${D}${includedir}/tensorflow_lite
-	cd ${S}/tensorflow/lite
-	cp --parents \
-		$(find . -name "*.h*") \
-		${D}${includedir}/tensorflow_lite
 
-	install -d ${D}${includedir}/tensorflow_lite
+	install -d ${D}${includedir}/tensorflow	
+	install -d ${D}${includedir}/tensorflow/lite
 	cd ${S}/tensorflow/lite
 	cp --parents \
 		$(find . -name "*.h*") \
-		${D}${includedir}/tensorflow_lite
+		${D}${includedir}/tensorflow/lite
 
 	install -d ${D}${bindir}/${PN}-${PV}/examples
 	for example in ${S}/tensorflow/lite/gen/bin/*

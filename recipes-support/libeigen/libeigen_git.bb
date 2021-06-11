@@ -4,7 +4,7 @@ HOMEPAGE = "http://eigen.tuxfamily.org/"
 LICENSE = "MPL-2.0"
 LIC_FILES_CHKSUM = "file://COPYING.MPL2;md5=815ca599c9df247a0c7f619bab123dad"
 
-SRC_URI = "https://bitbucket.org/eigen/eigen/get/20cbc6576426.tar.gz;downloadfilename=20cbc6576426.tar.gz"
+SRC_URI = "http://mirror.tensorflow.org/bitbucket.org/eigen/eigen/get/20cbc6576426.tar.gz"
 SRC_URI[sha256sum] = "74845ea27e19a1bcf63f3f271de62e06798f23e0467bb9d45b83a94918941b23"
 
 S = "${WORKDIR}/eigen-eigen-20cbc6576426"
